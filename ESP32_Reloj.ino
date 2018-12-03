@@ -1,10 +1,17 @@
-#include "utilsFileSystem.h"
+#include "utilsSPIFFS.h"
+#include "utilsJsonFS.h"
 
-utilsFileSystem uFS;
+utilsSPIFFS uFS;
+String filePath = "/data.txt";
+#define formatSPIFFS true
+
+utilsJsonFS uJF;
 
 void setup() {
   Serial.begin(115200);
-
+  uFS.begin(formatSPIFFS);
+  uJF.begin(uFS);
+  
 }
 
 void loop() {
