@@ -11,6 +11,7 @@ void setup() {
   Serial.begin(115200);
   uFS.begin(formatSPIFFS);
   uJF.begin(uFS);
+  uJF.fileTarget(filePath);
   
 }
 
