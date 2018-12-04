@@ -50,12 +50,13 @@ class utilsJsonFS {
         Serial.print(_wifiListFilePath);
         Serial.print(" Found...Creating....");
 
-        StaticJsonDocument<32> doc;
-        JsonObject root = doc.to<JsonObject>();
-        root["ESP32"] = "87654321";
+        StaticJsonDocument<32> doc;        
+        JsonArray wifiList = doc.to<JsonArray>();
+        JsonObject wifi = wifiList.createNestedObject();
+        wifi["ESP32"]="87654321";
 
         String json = "";
-        serializeJson(root, json);
+        serializeJson(wifiList, json);
         if (_uFS.writeFile(_wifiListFilePath, json)) {
           Serial.print("done");
         }
