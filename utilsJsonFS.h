@@ -18,8 +18,8 @@ class utilsJsonFS {
         Serial.print(_dataFilePath);
         Serial.print(" Found...Creating....");
 
-        StaticJsonBuffer<128> jsonBuffer;
-        JsonObject& root = jsonBuffer.createObject();
+        StaticJsonDocument<128> doc;
+        JsonObject root = doc.to<JsonObject>();
 
         root["appName"] = "ESP32_Reloj";
         root["currentIP"] = "";
@@ -31,7 +31,7 @@ class utilsJsonFS {
         root["currentSSID"] = "";
 
         String json = "";
-        root.printTo(json);
+        serializeJson(root, json);
         if (_uFS.writeFile(_dataFilePath, json)) {
           Serial.print("done");
         }
@@ -49,16 +49,16 @@ class utilsJsonFS {
         Serial.print("No File ");
         Serial.print(_wifiListFilePath);
         Serial.print(" Found...Creating....");
-        
-        StaticJsonBuffer<32> jsonBuffer;
-        JsonObject& root = jsonBuffer.createObject();
+
+        StaticJsonDocument<32> doc;
+        JsonObject root = doc.to<JsonObject>();
         root["ESP32"] = "87654321";
 
         String json = "";
-        root.printTo(json);
+        serializeJson(root, json);
         if (_uFS.writeFile(_wifiListFilePath, json)) {
           Serial.print("done");
-        }        
+        }
       } else {
         Serial.print("File ");
         Serial.print(_wifiListFilePath);
@@ -67,7 +67,20 @@ class utilsJsonFS {
       Serial.println();
     }
 
-    
+    String getJsonDataFileNamed(String name) {
+      if (_uFS.fileExits(_dataFilePath)) {
+        String json = _uFS.readFile(_dataFilePath);
+        StaticJsonDocument<128> doc;
+        deserializeJson(doc, json);
+        JsonObject object = doc.as<JsonObject>();
+        return object[name];
+      } else {
+        Serial.println("File not Exits");
+        return "";
+      }
+    }
+
+
 
 
 

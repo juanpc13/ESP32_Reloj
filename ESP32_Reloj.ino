@@ -16,12 +16,8 @@ void setup() {
   uJsonF.dataFileTarget(dataFilePath);
   uJsonF.wifiListFileTarget(wifiListFilePath);
 
-  //Funcion
-  String d = uFileS.readFile(dataFilePath);
-  String w = uFileS.readFile(wifiListFilePath);
-
-  Serial.println(d);
-  Serial.println(w);
+  //TEST
+  getJsonDataFileNamedTest();
   
 }
 
