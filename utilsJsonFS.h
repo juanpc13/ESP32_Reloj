@@ -75,7 +75,8 @@ class utilsJsonFS {
         DynamicJsonDocument doc;
         deserializeJson(doc, json);
         JsonObject object = doc.as<JsonObject>();
-        return object[name];
+        JsonVariant property = object.get(name);
+        return property.as<String>();
       } else {
         Serial.println("File not Exits");
         return "";

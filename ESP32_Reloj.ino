@@ -4,7 +4,7 @@
 utilsSPIFFS uFileS;
 String dataFilePath = "/data.txt";
 String wifiListFilePath = "/wifilist.txt";
-#define formatSPIFFS false
+#define formatSPIFFS false //Formatear memoria antes de usar
 
 utilsJsonFS uJsonF;
 
