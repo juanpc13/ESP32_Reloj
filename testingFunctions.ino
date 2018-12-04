@@ -18,3 +18,13 @@ void getJsonDataFileNamedTest(){
   }
   Serial.println("getJsonDataFileNamedTest PASS");
 }
+
+void getPasswordFromJsonFileTest(){
+  String s = uJsonF.getPasswordFromJsonFile("ESP32");
+  if(s!=""){
+    Serial.println(s);    
+  }else{
+    Serial.print("No Password for");
+    Serial.println(" ESP32");    
+  }
+}

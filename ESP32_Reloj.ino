@@ -4,7 +4,7 @@
 utilsSPIFFS uFileS;
 String dataFilePath = "/data.txt";
 String wifiListFilePath = "/wifilist.txt";
-#define formatSPIFFS true
+#define formatSPIFFS false
 
 utilsJsonFS uJsonF;
 
@@ -17,8 +17,11 @@ void setup() {
   uJsonF.wifiListFileTarget(wifiListFilePath);
 
   //TEST
+  dataFileTest();
   wifiListFileTest();
   getJsonDataFileNamedTest();
+  getPasswordFromJsonFileTest();
+  
   
 }
 

@@ -18,7 +18,7 @@ class utilsJsonFS {
         Serial.print(_dataFilePath);
         Serial.print(" Found...Creating....");
 
-        StaticJsonDocument<128> doc;
+        DynamicJsonDocument doc;
         JsonObject root = doc.to<JsonObject>();
 
         root["appName"] = "ESP32_Reloj";
@@ -50,10 +50,11 @@ class utilsJsonFS {
         Serial.print(_wifiListFilePath);
         Serial.print(" Found...Creating....");
 
-        StaticJsonDocument<32> doc;        
+        DynamicJsonDocument doc;
         JsonArray wifiList = doc.to<JsonArray>();
         JsonObject wifi = wifiList.createNestedObject();
-        wifi["ESP32"]="87654321";
+        wifi["ssid"] = "ESP32";
+        wifi["password"] = "87654321";
 
         String json = "";
         serializeJson(wifiList, json);
@@ -71,7 +72,7 @@ class utilsJsonFS {
     String getJsonDataFileNamed(String name) {
       if (_uFS.fileExits(_dataFilePath)) {
         String json = _uFS.readFile(_dataFilePath);
-        StaticJsonDocument<128> doc;
+        DynamicJsonDocument doc;
         deserializeJson(doc, json);
         JsonObject object = doc.as<JsonObject>();
         return object[name];
@@ -79,6 +80,35 @@ class utilsJsonFS {
         Serial.println("File not Exits");
         return "";
       }
+    }
+
+    String getPasswordFromJsonFile(String wifiName) {
+      if (_uFS.fileExits(_wifiListFilePath)) {
+        String json = _uFS.readFile(_wifiListFilePath);
+        DynamicJsonDocument doc;
+        deserializeJson(doc, json);
+
+        // extract the values
+        JsonArray array = doc.as<JsonArray>();
+        for (JsonVariant v : array) {
+          String wifiJson = v.as<String>();
+          StaticJsonDocument<64> w;
+          deserializeJson(w, wifiJson);
+          JsonObject wifi = w.as<JsonObject>();
+          JsonVariant ssid = wifi.get("ssid");
+          JsonVariant password = wifi.get("password");
+
+          if (!ssid.isNull() && !password.isNull()) {
+            if (ssid.as<String>() == wifiName) {
+              Serial.println("SSID Found");
+              return password.as<String>();
+            }
+          }
+        }
+      } else {
+        Serial.println("File not Exits");
+      }
+      return "";
     }
 
 
