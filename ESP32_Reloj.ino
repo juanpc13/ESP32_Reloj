@@ -1,17 +1,27 @@
 #include "utilsSPIFFS.h"
 #include "utilsJsonFS.h"
 
-utilsSPIFFS uFS;
-String filePath = "/data.txt";
-#define formatSPIFFS true
+utilsSPIFFS uFileS;
+String dataFilePath = "/data.txt";
+String wifiListFilePath = "/wifilist.txt";
+#define formatSPIFFS false
 
-utilsJsonFS uJF;
+utilsJsonFS uJsonF;
 
 void setup() {
   Serial.begin(115200);
-  uFS.begin(formatSPIFFS);
-  uJF.begin(uFS);
-  uJF.fileTarget(filePath);
+  Serial.println();
+  uFileS.begin(formatSPIFFS);
+  uJsonF.begin(uFileS);
+  uJsonF.dataFileTarget(dataFilePath);
+  uJsonF.wifiListFileTarget(wifiListFilePath);
+
+  //Funcion
+  String d = uFileS.readFile(dataFilePath);
+  String w = uFileS.readFile(wifiListFilePath);
+
+  Serial.println(d);
+  Serial.println(w);
   
 }
 
