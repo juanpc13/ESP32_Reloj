@@ -4,7 +4,6 @@ class utilsJsonFS {
   private:
     utilsSPIFFS _uFS;
     String _dataFilePath;
-    String _wifiListFilePath;
   public:
 
     void begin(utilsSPIFFS u) {
@@ -30,8 +29,14 @@ class utilsJsonFS {
         root["date"] = "";
         root["currentSSID"] = "";
 
+        JsonArray wifiList = root.createNestedArray("wifiList");
+        JsonObject wifi = wifiList.createNestedObject();
+        wifi["ssid"]="Esp32";
+        wifi["password"]="87654321";
+
         String json = "";
         serializeJson(root, json);
+        //serializeJsonPretty(root, json);
         if (_uFS.writeFile(_dataFilePath, json)) {
           Serial.print("done");
         }
@@ -43,32 +48,7 @@ class utilsJsonFS {
       Serial.println();
     }
 
-    void wifiListFileTarget(String f) {
-      _wifiListFilePath = f;
-      if (!_uFS.fileExits(_wifiListFilePath)) {
-        Serial.print("No File ");
-        Serial.print(_wifiListFilePath);
-        Serial.print(" Found...Creating....");
-
-        DynamicJsonDocument doc;
-        JsonArray wifiList = doc.to<JsonArray>();
-        JsonObject wifi = wifiList.createNestedObject();
-        wifi["ssid"] = "ESP32";
-        wifi["password"] = "87654321";
-
-        String json = "";
-        serializeJson(wifiList, json);
-        if (_uFS.writeFile(_wifiListFilePath, json)) {
-          Serial.print("done");
-        }
-      } else {
-        Serial.print("File ");
-        Serial.print(_wifiListFilePath);
-        Serial.print(" Found...Using File");
-      }
-      Serial.println();
-    }
-
+    
     String getJsonDataFileNamed(String name) {
       if (_uFS.fileExits(_dataFilePath)) {
         String json = _uFS.readFile(_dataFilePath);
@@ -82,10 +62,10 @@ class utilsJsonFS {
         return "";
       }
     }
-
+    
     String getPasswordFromJsonFile(String wifiName) {
-      if (_uFS.fileExits(_wifiListFilePath)) {
-        String json = _uFS.readFile(_wifiListFilePath);
+      if (_uFS.fileExits(_dataFilePath)) {
+        String json = getJsonDataFileNamed("wifiList");
         DynamicJsonDocument doc;
         deserializeJson(doc, json);
 
@@ -101,7 +81,6 @@ class utilsJsonFS {
 
           if (!ssid.isNull() && !password.isNull()) {
             if (ssid.as<String>() == wifiName) {
-              Serial.println("SSID Found");
               return password.as<String>();
             }
           }

@@ -2,23 +2,20 @@
 #include "utilsJsonFS.h"
 
 utilsSPIFFS uFileS;
-String dataFilePath = "/data.txt";
-String wifiListFilePath = "/wifilist.txt";
-#define formatSPIFFS false //Formatear memoria antes de usar
-
 utilsJsonFS uJsonF;
+
+String dataFilePath = "/data.txt";
+#define formatSPIFFS true //Formatear memoria antes de usar
 
 void setup() {
   Serial.begin(115200);
   Serial.println();
   uFileS.begin(formatSPIFFS);
   uJsonF.begin(uFileS);
-  uJsonF.dataFileTarget(dataFilePath);
-  uJsonF.wifiListFileTarget(wifiListFilePath);
+  uJsonF.dataFileTarget(dataFilePath);  
 
   //TEST
   dataFileTest();
-  wifiListFileTest();
   getJsonDataFileNamedTest();
   getPasswordFromJsonFileTest();
   
