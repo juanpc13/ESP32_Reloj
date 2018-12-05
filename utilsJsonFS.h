@@ -31,8 +31,8 @@ class utilsJsonFS {
 
         JsonArray wifiList = root.createNestedArray("wifiList");
         JsonObject wifi = wifiList.createNestedObject();
-        wifi["ssid"]="Esp32";
-        wifi["password"]="87654321";
+        wifi["ssid"] = "Esp32";
+        wifi["password"] = "87654321";
 
         String json = "";
         serializeJson(root, json);
@@ -48,7 +48,7 @@ class utilsJsonFS {
       Serial.println();
     }
 
-    
+
     String getJsonDataFileNamed(String name) {
       if (_uFS.fileExits(_dataFilePath)) {
         String json = _uFS.readFile(_dataFilePath);
@@ -62,7 +62,30 @@ class utilsJsonFS {
         return "";
       }
     }
-    
+
+    void editJsonDataFileNamed(String name, String value) {
+      if (_uFS.fileExits(_dataFilePath)) {
+        String json = _uFS.readFile(_dataFilePath);
+        DynamicJsonDocument doc;
+        deserializeJson(doc, json);
+        JsonObject root = doc.as<JsonObject>();
+        JsonVariant property = root.get(name);
+        if (!property.isNull()) {
+          property.set(value);
+          json = "";
+          serializeJson(root, json);
+          //serializeJsonPretty(root, json);
+          if (_uFS.writeFile(_dataFilePath, json)) {
+            Serial.print("done");
+          }
+        }else{
+          Serial.print("property to edit not found");
+        }
+      } else {
+        Serial.println("File not Exits");
+      }
+    }
+
     String getPasswordFromJsonFile(String wifiName) {
       if (_uFS.fileExits(_dataFilePath)) {
         String json = getJsonDataFileNamed("wifiList");
@@ -89,6 +112,26 @@ class utilsJsonFS {
         Serial.println("File not Exits");
       }
       return "";
+    }
+
+    void addWifiJsonFile(String ssid, String password){
+      if (_uFS.fileExits(_dataFilePath)) {
+        String json = getJsonDataFileNamed("wifiList");
+        DynamicJsonDocument doc;
+        deserializeJson(doc, json);
+
+        // extract the values
+        JsonArray wifiList = doc.as<JsonArray>();
+        JsonObject wifi = wifiList.createNestedObject();
+        wifi["ssid"] = ssid;
+        wifi["password"] = password;
+
+        json = "";
+        serializeJson(wifiList, json);
+        editJsonDataFileNamed("wifiList",json);
+      }else{
+        Serial.println("File not Exits");
+      }
     }
 
 

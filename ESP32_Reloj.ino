@@ -5,7 +5,7 @@ utilsSPIFFS uFileS;
 utilsJsonFS uJsonF;
 
 String dataFilePath = "/data.txt";
-#define formatSPIFFS true //Formatear memoria antes de usar
+#define formatSPIFFS false //Formatear memoria antes de usar
 
 void setup() {
   Serial.begin(115200);
@@ -16,9 +16,10 @@ void setup() {
 
   //TEST
   dataFileTest();
-  getJsonDataFileNamedTest();
-  getPasswordFromJsonFileTest();
-  
+  //getJsonDataFileNamedTest();
+  //getPasswordFromJsonFileTest();
+  //uJsonF.setJsonDataFileNamed("appName","Esp32");
+  //uJsonF.addWifiJsonFile(ssid, password);  
   
 }
 
