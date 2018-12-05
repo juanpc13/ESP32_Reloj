@@ -4,6 +4,8 @@
 utilsSPIFFS uFileS;
 utilsJsonFS uJsonF;
 
+String SSID = "";
+String PASSWORD = "";
 String dataFilePath = "/data.txt";
 #define formatSPIFFS false //Formatear memoria antes de usar
 
@@ -13,13 +15,12 @@ void setup() {
   uFileS.begin(formatSPIFFS);
   uJsonF.begin(uFileS);
   uJsonF.dataFileTarget(dataFilePath);  
-
-  //TEST
+  //Current JsonFile
   dataFileTest();
-  //getJsonDataFileNamedTest();
-  //getPasswordFromJsonFileTest();
-  //uJsonF.setJsonDataFileNamed("appName","Esp32");
-  //uJsonF.addWifiJsonFile(ssid, password);  
+  //Cargando el wifi actual y contraseña actual
+  SSID = uJsonF.getJsonDataFileNamed("currentSSID");
+  PASSWORD = uJsonF.getPasswordFromJsonFile(SSID);
+  
   
 }
 
