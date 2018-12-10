@@ -5,6 +5,7 @@
 #include "myTools.h"
 #include "utilsSPIFFS.h"
 #include "utilsJsonFS.h"
+#include "images.h"
 #include "myGlobalObjects.h"
 
 void setup() {
@@ -17,6 +18,7 @@ void setup() {
   //Cargando el wifi actual y contraseña actual
   SSID = uJsonF.getJsonDataFileNamed("currentSSID");
   PASSWORD = uJsonF.getPasswordFromJsonFile(SSID);
+
   
   
 }
