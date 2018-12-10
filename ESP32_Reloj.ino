@@ -1,3 +1,6 @@
+#include <Wire.h>
+#include "SSD1306Wire.h"
+#include "OLEDDisplayUi.h"
 #include "myTimeDate.h"
 #include "myTools.h"
 #include "utilsSPIFFS.h"
