@@ -1,5 +1,7 @@
+#include "myTimeDate.h"
 #include "utilsSPIFFS.h"
 #include "utilsJsonFS.h"
+
 
 utilsSPIFFS uFileS;
 utilsJsonFS uJsonF;
@@ -15,8 +17,7 @@ void setup() {
   uFileS.begin(formatSPIFFS);
   uJsonF.begin(uFileS);
   uJsonF.dataFileTarget(dataFilePath);  
-  //Current JsonFile
-  dataFileTest();
+  
   //Cargando el wifi actual y contraseña actual
   SSID = uJsonF.getJsonDataFileNamed("currentSSID");
   PASSWORD = uJsonF.getPasswordFromJsonFile(SSID);
