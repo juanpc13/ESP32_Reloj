@@ -14,6 +14,9 @@ String PASSWORD = "";
 const int pinSDA = 18;
 const int pinSCL = 19;
 
+//Variables de timmer millis
+unsigned long lastime = 0;
+
 //Variables de Configuracion
 String dataFilePath = "/data.txt";
 #define formatSPIFFS false //Formatear memoria antes de usar

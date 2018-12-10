@@ -38,5 +38,15 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  timingInLoop();
+  int remainingTimeBudget = ui.update();
 
+}
+
+
+void timingInLoop() {
+  if (millis() - lastime >= 1000) {
+    lastime =  millis();
+    mytime.oneSecond();
+  }
 }
