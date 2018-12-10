@@ -19,6 +19,19 @@ void setup() {
   SSID = uJsonF.getJsonDataFileNamed("currentSSID");
   PASSWORD = uJsonF.getPasswordFromJsonFile(SSID);
 
+  //Configuracion de mi interfaz en OLED
+  ui.setTargetFPS(60);
+  ui.setActiveSymbol(activeSymbol);
+  ui.setInactiveSymbol(inactiveSymbol);
+  ui.setIndicatorPosition(BOTTOM);
+  ui.setIndicatorDirection(LEFT_RIGHT);
+  ui.setFrameAnimation(SLIDE_LEFT);
+  ui.setFrames(frames, frameCount);
+  ui.setOverlays(overlays, overlaysCount);
+  ui.disableAutoTransition();
+  ui.init();
+  display.flipScreenVertically();
+
   
   
 }
