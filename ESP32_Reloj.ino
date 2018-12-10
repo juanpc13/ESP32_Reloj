@@ -2,15 +2,7 @@
 #include "myTools.h"
 #include "utilsSPIFFS.h"
 #include "utilsJsonFS.h"
-
-
-utilsSPIFFS uFileS;
-utilsJsonFS uJsonF;
-
-String SSID = "";
-String PASSWORD = "";
-String dataFilePath = "/data.txt";
-#define formatSPIFFS false //Formatear memoria antes de usar
+#include "myGlobalObjects.h"
 
 void setup() {
   Serial.begin(115200);
