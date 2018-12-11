@@ -2,8 +2,10 @@
 utilsSPIFFS uFileS;
 utilsJsonFS uJsonF;
 
-//Herramientas de tiempo y convertidor
-MyTimeDate mytime;
+//Usando I2C de un DS1307
+RTC_DS1307 rtc;
+DateTime now;
+char daysOfTheWeek[7][12] = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
 MyTools mytools;
 
 //Variables del WIFI
@@ -15,7 +17,8 @@ const int pinSDA = 18;
 const int pinSCL = 19;
 
 //Variables de timmer millis
-unsigned long lastime = 0;
+unsigned long lastTime = 0;
+unsigned long lastTouch = 0;
 
 //Variables de Configuracion
 String dataFilePath = "/data.txt";
@@ -38,7 +41,8 @@ int hallValue() {
 }
 
 //Varibles Objects
-SSD1306Wire  display(0x3c, pinSDA, pinSCL);
+//SSD1306Wire  display(0x3c, pinSDA, pinSCL);
+SH1106Wire display(0x3c, pinSDA, pinSCL);
 OLEDDisplayUi ui(&display);
 
 //Arrays of Frames and Overlay

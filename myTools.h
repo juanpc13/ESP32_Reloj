@@ -3,7 +3,7 @@ class MyTools {
 
   public:
 
-    String nowStringDate(MyTimeDate mt) {
+    String nowStringDate(DateTime mt) {
       //Add ZeroNoFill
       //Agregando dias con ceros si es menor a 10
       String fecha = (mt.day() < 10 ? "0" : "") + String(mt.day());
@@ -13,7 +13,7 @@ class MyTools {
       return fecha;
     }
 
-    String nowStringTime(MyTimeDate mt) {
+    String nowStringTime(DateTime mt) {
       byte h = (mt.hour() > 12 ? (mt.hour() - 12) : mt.hour());
       h = (h == 0 ? 12 : h);
 
@@ -27,13 +27,13 @@ class MyTools {
       return hora;
     }
 
-    String nowStringSegundo(MyTimeDate mt) {
+    String nowStringSegundo(DateTime mt) {
       byte s = mt.second();
       String seg = String(s % 2 == 0 ? ":" : " ") + String(s < 10 ? "0" : "") + s;
       seg += "\n " + nowAMorPM(mt);
       return seg;
     }
-    String nowAMorPM(MyTimeDate mt) {
+    String nowAMorPM(DateTime mt) {
       return (mt.hour() < 12 ? "AM" : "PM");
     }
 };

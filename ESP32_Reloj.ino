@@ -1,7 +1,8 @@
 #include <Wire.h>
-#include "SSD1306Wire.h"
+//#include "SSD1306Wire.h"
+#include "SH1106Wire.h", legacy include: `#include "SH1106.h"`
 #include "OLEDDisplayUi.h"
-#include "myTimeDate.h"
+#include "RTClib.h"
 #include "myTools.h"
 #include "utilsSPIFFS.h"
 #include "utilsJsonFS.h"
@@ -13,8 +14,11 @@ void setup() {
   Serial.println();
   uFileS.begin(formatSPIFFS);
   uJsonF.begin(uFileS);
-  uJsonF.dataFileTarget(dataFilePath);  
-  
+  uJsonF.dataFileTarget(dataFilePath);
+  rtc.begin();
+  //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  now = rtc.now();
+
   //Cargando el wifi actual y contraseña actual
   SSID = uJsonF.getJsonDataFileNamed("currentSSID");
   PASSWORD = uJsonF.getPasswordFromJsonFile(SSID);
@@ -32,21 +36,50 @@ void setup() {
   ui.init();
   display.flipScreenVertically();
 
-  
-  
+
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   timingInLoop();
-  int remainingTimeBudget = ui.update();
-
+  touchInLoop();
+  int remainingTimeBudget = ui.update();  
 }
 
 
 void timingInLoop() {
-  if (millis() - lastime >= 1000) {
-    lastime =  millis();
-    mytime.oneSecond();
+  if (millis() - lastTime >= 1000) {
+    lastTime =  millis();
+    now = rtc.now();
+  }
+}
+
+void touchInLoop() {
+  int sesibility = 20;
+  int pressedDelay = 100;
+  if (touchRead(T6) < sesibility) {
+    if(millis() - lastTouch > pressedDelay){
+      lastTouch = millis();
+      ui.nextFrame();
+    }    
+  } else if (touchRead(T9) < sesibility) {
+    if(millis() - lastTouch > pressedDelay){
+      lastTouch = millis();
+      ui.previousFrame();
+    }    
+  }else if(touchRead(T5) < sesibility){
+    if(millis() - lastTouch > pressedDelay){
+      lastTouch = millis();
+      pushCount++;
+    }
+  }else if(touchRead(T8) < sesibility){
+    if(millis() - lastTouch > pressedDelay){
+      lastTouch = millis();
+      now = rtc.now();      
+      rtc.adjust(DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute()+5, now.second()));
+    }
+  }else{
+    lastTouch = millis();
   }
 }

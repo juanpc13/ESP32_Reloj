@@ -2,22 +2,22 @@ void timeOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
   display->setTextAlignment(TEXT_ALIGN_RIGHT);
   display->setFont(ArialMT_Plain_10);
   if (state->currentFrame != 0) {//Dont Show in Time Frame
-    display->drawString(128, 0, mytools.nowStringTime(mytime));
+    display->drawString(128, 0, mytools.nowStringTime(now));
   }
 }
 
 void frameWatch(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_10);
-  display->drawString(64 + x, 0 + y, mytools.nowStringDate(mytime));
+  display->drawString(64 + x, 0 + y, mytools.nowStringDate(now));
 
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_24);
-  display->drawString(56 + x, 18 + y, mytools.nowStringTime(mytime));
+  display->drawString(56 + x, 18 + y, mytools.nowStringTime(now));
 
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_10);
-  display->drawString(98 + x, 18 + y, mytools.nowStringSegundo(mytime));
+  display->drawString(98 + x, 18 + y, mytools.nowStringSegundo(now));
 }
 
 void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
