@@ -19,6 +19,7 @@ const int pinSCL = 19;
 //Variables de timmer millis
 unsigned long lastTime = 0;
 unsigned long lastTouch = 0;
+unsigned long lastInactiveScreen = 0;
 
 //Variables de Configuracion
 String dataFilePath = "/data.txt";

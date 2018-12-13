@@ -44,7 +44,8 @@ void loop() {
   // put your main code here, to run repeatedly:
   timingInLoop();
   touchInLoop();
-  int remainingTimeBudget = ui.update();  
+  inactiveScreen();
+  int remainingTimeBudget = ui.update();
 }
 
 
@@ -55,31 +56,51 @@ void timingInLoop() {
   }
 }
 
+void inactiveScreen() {
+  int inactiveTime = 10000;
+  if (millis() - lastInactiveScreen > inactiveTime) {    
+    display.displayOff();
+    touchAttachInterrupt(T6, callback, 20);
+    esp_sleep_enable_touchpad_wakeup();
+    esp_deep_sleep_start();
+  }else{
+    display.displayOn();
+  }
+}
+
+void callback(){
+  
+}
+
 void touchInLoop() {
   int sesibility = 20;
   int pressedDelay = 100;
   if (touchRead(T6) < sesibility) {
-    if(millis() - lastTouch > pressedDelay){
+    if (millis() - lastTouch > pressedDelay) {
       lastTouch = millis();
+      lastInactiveScreen = millis();
       ui.nextFrame();
-    }    
+    }
   } else if (touchRead(T9) < sesibility) {
-    if(millis() - lastTouch > pressedDelay){
+    if (millis() - lastTouch > pressedDelay) {
       lastTouch = millis();
+      lastInactiveScreen = millis();
       ui.previousFrame();
-    }    
-  }else if(touchRead(T5) < sesibility){
-    if(millis() - lastTouch > pressedDelay){
+    }
+  } else if (touchRead(T5) < sesibility) {
+    if (millis() - lastTouch > pressedDelay) {
       lastTouch = millis();
+      lastInactiveScreen = millis();
       pushCount++;
     }
-  }else if(touchRead(T8) < sesibility){
-    if(millis() - lastTouch > pressedDelay){
+  } else if (touchRead(T8) < sesibility) {
+    if (millis() - lastTouch > pressedDelay) {
       lastTouch = millis();
-      now = rtc.now();      
-      rtc.adjust(DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute()+5, now.second()));
+      lastInactiveScreen = millis();
+      now = rtc.now();
+      rtc.adjust(DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute() + 5, now.second()));
     }
-  }else{
+  } else {
     lastTouch = millis();
   }
 }
