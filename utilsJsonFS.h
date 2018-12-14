@@ -57,8 +57,9 @@ class utilsJsonFS {
           Serial.print("property to edit not found");
         }
       } else {
-        Serial.println("File not Exits");
+        Serial.print("File not Exits");
       }
+      Serial.println();
     }
 
     String getPasswordFromJsonFile(String wifiName) {
