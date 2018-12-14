@@ -19,8 +19,6 @@ void setup() {
   //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   now = rtc.now();
 
-  //Serial.println(uFileS.readFile(dataFilePath));
-
   //Cargando el wifi actual y contraseña actual
   SSID = uJsonF.getJsonDataFileNamed("currentSSID");
   PASSWORD = uJsonF.getPasswordFromJsonFile(SSID);
