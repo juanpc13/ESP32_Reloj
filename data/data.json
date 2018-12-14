@@ -1,8 +1,9 @@
 {
     "appName": "ESP32_Reloj",
-    "currentIP": "",
+    "ipAddress": "",
     "hostName": "",
-    "targetIP": "",
+    "serverName": "",
+    "accessToken":"",
     "portNumber": 80,
     "currentSSID": "",
     "wifiList": [
