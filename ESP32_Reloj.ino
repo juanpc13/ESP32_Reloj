@@ -1,11 +1,3 @@
-#include <Wire.h>
-//#include "SSD1306Wire.h"
-#include "SH1106Wire.h", legacy include: `#include "SH1106.h"`
-#include "OLEDDisplayUi.h"
-#include "RTClib.h"
-#include "myTools.h"
-#include "utilsSPIFFS.h"
-#include "utilsJsonFS.h"
 #include "myGlobalObjects.h"
 
 void setup() {

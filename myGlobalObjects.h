@@ -1,11 +1,17 @@
 //Manejadores de JSON
+#include "utilsSPIFFS.h"
 utilsSPIFFS uFileS;
+#include "utilsJsonFS.h"
 utilsJsonFS uJsonF;
 
 //Usando I2C de un DS1307
-RTC_DS1307 rtc;
+#include "RTClib.h"
 DateTime now;
+RTC_DS1307 rtc;
 char daysOfTheWeek[7][12] = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
+
+//Tool para convertir las fechas
+#include "myTools.h"
 MyTools mytools;
 
 //Variables del WIFI
@@ -41,7 +47,11 @@ int hallValue() {
   return h;
 }
 
-//Varibles Objects
+//Pantalla OLED Importes
+#include <Wire.h>
+//#include "SSD1306Wire.h"
+#include "SH1106Wire.h", legacy include: `#include "SH1106.h"`
+#include "OLEDDisplayUi.h"
 //SSD1306Wire  display(0x3c, pinSDA, pinSCL);
 SH1106Wire display(0x3c, pinSDA, pinSCL);
 OLEDDisplayUi ui(&display);
