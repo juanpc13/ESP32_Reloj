@@ -19,6 +19,8 @@ void setup() {
   //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   now = rtc.now();
 
+  //Serial.println(uFileS.readFile(dataFilePath));
+
   //Cargando el wifi actual y contraseña actual
   SSID = uJsonF.getJsonDataFileNamed("currentSSID");
   PASSWORD = uJsonF.getPasswordFromJsonFile(SSID);
@@ -60,7 +62,7 @@ void inactiveScreen() {
   int inactiveTime = 10000;
   if (millis() - lastInactiveScreen > inactiveTime) {    
     display.displayOff();
-    touchAttachInterrupt(T6, callback, 20);
+    touchAttachInterrupt(T5, callback, 50);
     esp_sleep_enable_touchpad_wakeup();
     esp_deep_sleep_start();
   }else{
@@ -73,32 +75,32 @@ void callback(){
 }
 
 void touchInLoop() {
-  int sesibility = 20;
+  int sesibility = 50;
   int pressedDelay = 100;
-  if (touchRead(T6) < sesibility) {
+  if (touchRead(T5) < sesibility) {
     if (millis() - lastTouch > pressedDelay) {
       lastTouch = millis();
       lastInactiveScreen = millis();
       ui.nextFrame();
     }
-  } else if (touchRead(T9) < sesibility) {
+  } else if (touchRead(T8) < sesibility) {
     if (millis() - lastTouch > pressedDelay) {
       lastTouch = millis();
       lastInactiveScreen = millis();
       ui.previousFrame();
     }
-  } else if (touchRead(T5) < sesibility) {
+  } else if (touchRead(T6) < sesibility) {
     if (millis() - lastTouch > pressedDelay) {
       lastTouch = millis();
       lastInactiveScreen = millis();
       pushCount++;
     }
-  } else if (touchRead(T8) < sesibility) {
+  } else if (touchRead(T9) < sesibility) {
     if (millis() - lastTouch > pressedDelay) {
       lastTouch = millis();
       lastInactiveScreen = millis();
       now = rtc.now();
-      rtc.adjust(DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute() + 5, now.second()));
+      rtc.adjust(DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute() + 1, now.second()));
     }
   } else {
     lastTouch = millis();
