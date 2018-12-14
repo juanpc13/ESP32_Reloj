@@ -49,6 +49,7 @@ OLEDDisplayUi ui(&display);
 //Arrays of Frames and Overlay
 int frameCount = 5;
 int overlaysCount = 1;
+#include "images.h"
 #include "myFrames.h"
 OverlayCallback overlays[] = {timeOverlay};
 FrameCallback frames[] = {frameWatch, drawFrame2, drawFrame3, drawFrame4, drawFrame5};
