@@ -22,7 +22,7 @@ unsigned long lastTouch = 0;
 unsigned long lastInactiveScreen = 0;
 
 //Variables de Configuracion
-String dataFilePath = "/data.txt";
+String dataFilePath = "/data.json";
 #define formatSPIFFS false //Formatear memoria antes de usar
 
 //Extra
