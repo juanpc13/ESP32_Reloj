@@ -1,0 +1,16 @@
+{
+    "appName": "ESP32_Reloj",
+    "currentIP": "",
+    "hostName": "",
+    "targetIP": "",
+    "portNumber": 80,
+    "time": "",
+    "date": "",
+    "currentSSID": "",
+    "wifiList": [
+        {
+            "ssid": "Esp32",
+            "password": "87654321"
+        }
+    ]
+}

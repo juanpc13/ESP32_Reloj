@@ -14,32 +14,7 @@ class utilsJsonFS {
       _dataFilePath = f;
       if (!_uFS.fileExits(_dataFilePath)) {
         Serial.print("No File ");
-        Serial.print(_dataFilePath);
-        Serial.print(" Found...Creating....");
-
-        DynamicJsonDocument doc;
-        JsonObject root = doc.to<JsonObject>();
-
-        root["appName"] = "ESP32_Reloj";
-        root["currentIP"] = "";
-        root["hostName"] = "";
-        root["targetIP"] = "";
-        root["portNumber"] = "80";
-        root["time"] = "";
-        root["date"] = "";
-        root["currentSSID"] = "";
-
-        JsonArray wifiList = root.createNestedArray("wifiList");
-        JsonObject wifi = wifiList.createNestedObject();
-        wifi["ssid"] = "Esp32";
-        wifi["password"] = "87654321";
-
-        String json = "";
-        serializeJson(root, json);
-        //serializeJsonPretty(root, json);
-        if (_uFS.writeFile(_dataFilePath, json)) {
-          Serial.print("done");
-        }
+        Serial.print(_dataFilePath);        
       } else {
         Serial.print("File ");
         Serial.print(_dataFilePath);
