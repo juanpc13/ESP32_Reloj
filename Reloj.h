@@ -21,6 +21,11 @@ SH1106Wire display(0x3c, pinSDA, pinSCL);
 #include "OLEDDisplayUi.h"
 OLEDDisplayUi ui(&display);
 
+//Variables de timmer millis
+unsigned long lastTime = 0;
+unsigned long lastTouch = 0;
+unsigned long lastInactiveScreen = 0;
+
 //Importando mis Herramientas
 #include "myTools.h"
 MyTools mytools;
