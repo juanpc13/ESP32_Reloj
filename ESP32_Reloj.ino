@@ -28,7 +28,7 @@ void loop() {
   timingInLoop();
   touchInLoop();
   inactiveScreen();
-  int remainingTimeBudget = ui.update();
+  int remainingTimeBudget = ui.update();  
 }
 
 void timingInLoop() {
@@ -40,23 +40,31 @@ void timingInLoop() {
 
 void inactiveScreen() {
   int inactiveTime = 10000;
-  if (millis() - lastInactiveScreen > inactiveTime) {    
+  if (millis() - lastInactiveScreen > inactiveTime) {
     display.displayOff();
-    touchAttachInterrupt(T5, callback, 50);
+    touchAttachInterrupt(T5, callback, 40);
     esp_sleep_enable_touchpad_wakeup();
     esp_deep_sleep_start();
-  }else{
+  } else {
     display.displayOn();
   }
 }
 
-void callback(){
-  
+void callback() {
+
 }
 
 void touchInLoop() {
-  int sesibility = 50;
+  byte sesibility = 40;
   int pressedDelay = 100;
+  touch1.update();
+
+  if (touch1.isPressed()) {
+    lastInactiveScreen = millis();
+    pushCount++;
+  }
+
+
   if (touchRead(T5) < sesibility) {
     if (millis() - lastTouch > pressedDelay) {
       lastTouch = millis();
@@ -68,19 +76,6 @@ void touchInLoop() {
       lastTouch = millis();
       lastInactiveScreen = millis();
       ui.previousFrame();
-    }
-  } else if (touchRead(T6) < sesibility) {
-    if (millis() - lastTouch > pressedDelay) {
-      lastTouch = millis();
-      lastInactiveScreen = millis();
-      pushCount++;
-    }
-  } else if (touchRead(T9) < sesibility) {
-    if (millis() - lastTouch > pressedDelay) {
-      lastTouch = millis();
-      lastInactiveScreen = millis();
-      now = rtc.now();
-      rtc.adjust(DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute() + 1, now.second()));
     }
   } else {
     lastTouch = millis();

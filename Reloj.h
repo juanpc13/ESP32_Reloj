@@ -29,6 +29,9 @@ unsigned long lastInactiveScreen = 0;
 //Importando mis Herramientas
 #include "myTools.h"
 MyTools mytools;
+#include "touchUtils.h"
+TouchUtils touch1(T6);
+
 
 //Extra
 int pushCount = 0;
