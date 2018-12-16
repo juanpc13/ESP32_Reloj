@@ -13,10 +13,39 @@ char daysOfTheWeek[7][12] = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves"
 
 //Libreria de pantalla Oled
 //#include "SSD1306Wire.h"
-#include "SH1106Wire.h", legacy include: `#include "SH1106.h"`
+#include "SH1106.h" #include "SH1106Wire.h"
 //SSD1306Wire  display(0x3c, pinSDA, pinSCL);
 SH1106Wire display(0x3c, pinSDA, pinSCL);
 
 //Libreria de Interfaz UI
 #include "OLEDDisplayUi.h"
 OLEDDisplayUi ui(&display);
+
+//Importando mis Herramientas
+#include "myTools.h"
+MyTools mytools;
+
+//Extra
+int pushCount = 0;
+int hallValue() {
+  int h = 0;
+  int cicles = 32;
+  for (int i = 0 ; i < cicles; i++) {
+    if(i == 0){
+      h = hallRead();
+    }else{
+      h += hallRead();
+    }
+  }
+  h = int(h / float(cicles));
+  return h;
+}
+
+//Agregando mis frames
+//Arrays of Frames and Overlay y Overlays
+int frameCount = 5;
+int overlaysCount = 1;
+#include "images.h"
+#include "myFrames.h"
+OverlayCallback overlays[] = {timeOverlay};
+FrameCallback frames[] = {frameWatch, drawFrame2, drawFrame3, drawFrame4, drawFrame5};
