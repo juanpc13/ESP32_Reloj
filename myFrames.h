@@ -21,6 +21,19 @@ void frameWatch(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
 }
 
 void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
+  touch2.update();
+  touch3.update();
+  
+  if (touch2.isPressed()) {
+    lastInactiveScreen = millis();
+    pushCount--;
+  }
+
+  if (touch3.isPressed()) {
+    lastInactiveScreen = millis();
+    pushCount++;
+  }
+  
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_24);
   display->drawString(64 + x, 20 + y, String(pushCount));

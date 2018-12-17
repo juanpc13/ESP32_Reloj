@@ -37,7 +37,7 @@ TouchUtils touch4(T5);
 
 
 //Extra
-int pushCount = 0;
+RTC_DATA_ATTR int pushCount = 0;
 int hallValue() {
   int h = 0;
   int cicles = 32;

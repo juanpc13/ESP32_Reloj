@@ -56,23 +56,12 @@ void callback() {
 
 void touchInLoop() {
   touch1.update();
-  touch2.update();
-  touch3.update();
   touch4.update();
 
   if (touch1.isPressed()) {
     lastInactiveScreen = millis();
     ui.previousFrame();
-  }
-
-  if (touch2.isPressed()) {
-    lastInactiveScreen = millis();    
-  }
-
-  if (touch3.isPressed()) {
-    lastInactiveScreen = millis();
-    pushCount++;
-  }
+  }  
 
   if (touch4.isPressed()) {
     lastInactiveScreen = millis();
