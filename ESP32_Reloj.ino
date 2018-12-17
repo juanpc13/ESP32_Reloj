@@ -42,7 +42,7 @@ void inactiveScreen() {
   int inactiveTime = 10000;
   if (millis() - lastInactiveScreen > inactiveTime) {
     display.displayOff();
-    touchAttachInterrupt(T5, callback, 40);
+    touchAttachInterrupt(touch4.getTouchPin(), callback, 40);
     esp_sleep_enable_touchpad_wakeup();
     esp_deep_sleep_start();
   } else {
@@ -55,29 +55,28 @@ void callback() {
 }
 
 void touchInLoop() {
-  byte sesibility = 40;
-  int pressedDelay = 100;
   touch1.update();
+  touch2.update();
+  touch3.update();
+  touch4.update();
 
   if (touch1.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.previousFrame();
+  }
+
+  if (touch2.isPressed()) {
+    lastInactiveScreen = millis();    
+  }
+
+  if (touch3.isPressed()) {
     lastInactiveScreen = millis();
     pushCount++;
   }
 
-
-  if (touchRead(T5) < sesibility) {
-    if (millis() - lastTouch > pressedDelay) {
-      lastTouch = millis();
-      lastInactiveScreen = millis();
-      ui.nextFrame();
-    }
-  } else if (touchRead(T8) < sesibility) {
-    if (millis() - lastTouch > pressedDelay) {
-      lastTouch = millis();
-      lastInactiveScreen = millis();
-      ui.previousFrame();
-    }
-  } else {
-    lastTouch = millis();
+  if (touch4.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.nextFrame();
   }
+  
 }

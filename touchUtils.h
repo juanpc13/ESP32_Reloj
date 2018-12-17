@@ -19,6 +19,10 @@ class TouchUtils {
       }
     }
 
+    byte getTouchPin(){
+      return touchP;
+    }
+
     void setMultiPushDelay(int _multiPushDelay) {
       multiPushDelay = _multiPushDelay;
     }

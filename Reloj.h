@@ -30,7 +30,10 @@ unsigned long lastInactiveScreen = 0;
 #include "myTools.h"
 MyTools mytools;
 #include "touchUtils.h"
-TouchUtils touch1(T6);
+TouchUtils touch1(T8);
+TouchUtils touch2(T9);
+TouchUtils touch3(T6);
+TouchUtils touch4(T5);
 
 
 //Extra
