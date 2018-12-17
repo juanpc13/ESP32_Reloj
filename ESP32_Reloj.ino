@@ -3,6 +3,11 @@
 void setup() {
   // put your setup code here, to run once:
 
+  //Luz
+  luz.setPinGround(15);
+  luz.begin(0);// FirstChannel is 0
+  
+
   //Cargando el reloj
   rtc.begin();
   //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));

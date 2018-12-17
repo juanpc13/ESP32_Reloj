@@ -68,5 +68,30 @@ void drawFrame4(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
 }
 
 void drawFrame5(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
+  //Evitar que se apague la pantalla
+  lastInactiveScreen = millis();
+  
+  touch2.update();
+  touch3.update();
+
+  //Cambiar de encendido a apagado y viceversa
+  if (touch2.isPressed()) {
+    if(luz.getBrightness() == 0){
+      luz.on();
+    }else{
+      luz.off();    
+    }
+  }
+
+  //Aumentar la intensidad
+  if (touch3.isPressed()) {
+    luz.setBrightness(luz.getBrightness()+2);
+  }
+
+  display->setTextAlignment(TEXT_ALIGN_CENTER);
+  display->setFont(ArialMT_Plain_10);
+  display->drawString(64 + x, 4 + y, "Luz");
+  display->setFont(ArialMT_Plain_24);
+  display->drawString(64 + x, 20 + y, String(luz.getBrightnessPorcent())+"%");
 
 }

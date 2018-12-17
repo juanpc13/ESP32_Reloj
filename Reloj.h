@@ -23,7 +23,6 @@ OLEDDisplayUi ui(&display);
 
 //Variables de timmer millis
 unsigned long lastTime = 0;
-unsigned long lastTouch = 0;
 unsigned long lastInactiveScreen = 0;
 
 //Importando mis Herramientas
@@ -37,6 +36,8 @@ TouchUtils touch4(T5);
 
 
 //Extra
+#include "luzUtil.h"
+Luz luz(2);
 RTC_DATA_ATTR int pushCount = 0;
 int hallValue() {
   int h = 0;
