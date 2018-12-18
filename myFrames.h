@@ -85,7 +85,7 @@ void drawFrame5(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
 
   //Aumentar la intensidad
   if (touch3.isPressed()) {
-    luz.setBrightness(luz.getBrightness()+2);
+    luz.setBrightness(constrain(luz.getBrightness()+3, 0, 255));
   }
 
   display->setTextAlignment(TEXT_ALIGN_CENTER);

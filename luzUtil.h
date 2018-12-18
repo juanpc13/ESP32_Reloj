@@ -34,7 +34,6 @@ class Luz {
     }
 
     void setBrightness(byte _brightness) {
-      _brightness = constrain(_brightness , 0, 255);
       brightness = _brightness;
       ledcAnalogWrite(LEDChannel, brightness);
     }

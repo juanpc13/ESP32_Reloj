@@ -66,7 +66,7 @@ void touchInLoop() {
   if (touch1.isPressed()) {
     lastInactiveScreen = millis();
     ui.previousFrame();
-  }  
+  }
 
   if (touch4.isPressed()) {
     lastInactiveScreen = millis();
