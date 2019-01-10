@@ -19,7 +19,7 @@ class TouchUtils {
       }
     }
 
-    byte getTouchPin(){
+    byte getTouchPin() {
       return touchP;
     }
 
@@ -54,6 +54,12 @@ class TouchUtils {
       return false;
     }
 
+    boolean longPress(int limitTimePressed) {
+      if (millis() - pressedTime > limitTimePressed) {
+        return true;
+      }
+      return false;
+    }
 
 
 };
