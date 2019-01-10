@@ -6,7 +6,7 @@ void setup() {
   //Luz
   luz.setPinGround(15);
   luz.begin(0);// FirstChannel is 0
-  
+
 
   //Cargando el reloj
   rtc.begin();
@@ -33,7 +33,7 @@ void loop() {
   timingInLoop();
   touchInLoop();
   inactiveScreen();
-  int remainingTimeBudget = ui.update();  
+  int remainingTimeBudget = ui.update();
 }
 
 void timingInLoop() {
@@ -61,16 +61,9 @@ void callback() {
 
 void touchInLoop() {
   touch1.update();
-  touch4.update();
-
-  if (touch1.isPressed()) {
-    lastInactiveScreen = millis();
-    ui.previousFrame();
-  }
-
-  if (touch4.isPressed()) {
-    lastInactiveScreen = millis();
-    ui.nextFrame();
-  }
-  
+  touch2.update();
+  touch3.update();
+  touch4.update();  
 }
+
+

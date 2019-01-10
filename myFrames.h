@@ -7,6 +7,50 @@ void timeOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
 }
 
 void frameWatch(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
+
+  //Editar la Fecha y Hora
+  if (touch3.isPressed()) {
+    lastInactiveScreen = millis();
+    int m = now.minute();
+    int h = now.hour();
+    m++;
+    if (m > 59) {
+      m = 0;
+      h++;
+      if (h > 23) {
+        h = 0;        
+      }
+    }
+    rtc.adjust(DateTime(now.year(), now.month(), now.day(), h, m, now.second()));
+    now = rtc.now();
+  }
+  if (touch2.isPressed()) {
+    lastInactiveScreen = millis();    
+    int m = now.minute();
+    int h = now.hour();
+    m--;
+    if (m < 0) {
+      m = 59;
+      h--;
+      if (h < 0) {
+        h = 23;        
+      }
+    }
+    rtc.adjust(DateTime(now.year(), now.month(), now.day(), h, m, now.second()));
+    now = rtc.now();
+  }
+
+  //Main Touch Control
+  if (touch1.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.previousFrame();
+  }
+  if (touch4.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.nextFrame();
+  }
+
+
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_10);
   display->drawString(64 + x, 0 + y, mytools.nowStringDate(now));
@@ -21,9 +65,7 @@ void frameWatch(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
 }
 
 void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
-  touch2.update();
-  touch3.update();
-  
+
   if (touch2.isPressed()) {
     lastInactiveScreen = millis();
     pushCount--;
@@ -33,13 +75,34 @@ void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
     lastInactiveScreen = millis();
     pushCount++;
   }
-  
+
+  //Main Touch Control
+  if (touch1.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.previousFrame();
+  }
+  if (touch4.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.nextFrame();
+  }
+
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_24);
   display->drawString(64 + x, 20 + y, String(pushCount));
 }
 
 void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
+
+  //Main Touch Control
+  if (touch1.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.previousFrame();
+  }
+  if (touch4.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.nextFrame();
+  }
+
   // Text alignment demo
   display->setFont(ArialMT_Plain_10);
 
@@ -57,9 +120,17 @@ void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
 }
 
 void drawFrame4(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
-  // Demo for drawStringMaxWidth:
-  // with the third parameter you can define the width after which words will be wrapped.
-  // Currently only spaces and "-" are allowed for wrapping
+
+  //Main Touch Control
+  if (touch1.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.previousFrame();
+  }
+  if (touch4.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.nextFrame();
+  }
+
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_10);
   display->drawString(64 + x, 4 + y, "Hall Sensor");
@@ -70,28 +141,35 @@ void drawFrame4(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
 void drawFrame5(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
   //Evitar que se apague la pantalla
   lastInactiveScreen = millis();
-  
-  touch2.update();
-  touch3.update();
 
   //Cambiar de encendido a apagado y viceversa
   if (touch2.isPressed()) {
-    if(luz.getBrightness() == 0){
+    if (luz.getBrightness() == 0) {
       luz.on();
-    }else{
-      luz.off();    
+    } else {
+      luz.off();
     }
   }
 
   //Aumentar la intensidad
   if (touch3.isPressed()) {
-    luz.setBrightness(constrain(luz.getBrightness()+3, 0, 255));
+    luz.setBrightness(constrain(luz.getBrightness() + 3, 0, 255));
+  }
+
+  //Main Touch Control
+  if (touch1.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.previousFrame();
+  }
+  if (touch4.isPressed()) {
+    lastInactiveScreen = millis();
+    ui.nextFrame();
   }
 
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_10);
   display->drawString(64 + x, 4 + y, "Luz");
   display->setFont(ArialMT_Plain_24);
-  display->drawString(64 + x, 20 + y, String(luz.getBrightnessPorcent())+"%");
+  display->drawString(64 + x, 20 + y, String(luz.getBrightnessPorcent()) + "%");
 
 }
