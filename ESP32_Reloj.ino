@@ -24,6 +24,7 @@ void setup() {
   ui.setOverlays(overlays, overlaysCount);
   ui.disableAutoTransition();
   ui.init();
+  ui.switchToFrame(1);//1 es el frame del reloj
   display.flipScreenVertically();
 
 }
@@ -33,6 +34,7 @@ void loop() {
   timingInLoop();
   touchInLoop();
   inactiveScreen();
+  cronometro.Chronoloop();
   ui.update();
 }
 
