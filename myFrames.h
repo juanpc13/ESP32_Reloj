@@ -24,6 +24,7 @@ void frameWatch(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
     rtc.adjust(DateTime(now.year(), now.month(), now.day(), h, m, now.second()));
     now = rtc.now();
   }
+  
   if (touch2.isPressed()) {
     lastInactiveScreen = millis();    
     int m = now.minute();

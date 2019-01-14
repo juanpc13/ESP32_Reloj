@@ -33,7 +33,7 @@ void loop() {
   timingInLoop();
   touchInLoop();
   inactiveScreen();
-  int remainingTimeBudget = ui.update();
+  ui.update();
 }
 
 void timingInLoop() {
@@ -65,5 +65,3 @@ void touchInLoop() {
   touch3.update();
   touch4.update();  
 }
-
-
