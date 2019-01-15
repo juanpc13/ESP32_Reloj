@@ -1,5 +1,6 @@
 #include "SPIFFS.h"
 
+#define FORMAT_SPIFFS false
 #define FORMAT_SPIFFS_IF_FAILED true
 
 class utilsSPIFFS {
@@ -15,6 +16,10 @@ class utilsSPIFFS {
         return false;
       }
       return true;
+    }
+
+    File file(String path){
+      return SPIFFS.open(path);
     }
 
     bool writeFile(String path, String message) {

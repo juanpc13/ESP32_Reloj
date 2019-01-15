@@ -1,34 +1,47 @@
 #include <ArduinoJson.h>
 #include "SPIFFS.h"
+#include <WiFiMulti.h>
 
-#define FORMAT_SPIFFS_IF_FAILED true
+#define wifiFile "/wifi_list.json"
 
 class MyWiFi {
   private:
-    String wFilePath;
-    utilsSPIFFS _uFS;
+    String wFilePath = wifiFile;
+    utilsSPIFFS *_uFS;
+    WiFiMulti *_wifiMulti;
   public:
 
-    void setWifiFile(String _wFilePath) {
+    MyWiFi(utilsSPIFFS *u, WiFiMulti *w) {
+      _uFS = u;
+      _wifiMulti = w;
+    }
+
+    void setWifiDataFile(String _wFilePath) {
       wFilePath = _wFilePath;
     }
 
-    void setFileSystem(utilsSPIFFS u) {
+    void setFileSystem(utilsSPIFFS *u) {
       _uFS = u;
     }
 
+    void setWifiMulti(WiFiMulti *w) {
+      _wifiMulti = w;
+    }
+
     bool begin() {
-      //Convirtiendo archivo en JsonArray
-      String json = _uFS.readFile(wFilePath);
+      _uFS->begin(FORMAT_SPIFFS);
+      
+      File file = _uFS->file(wFilePath);
       DynamicJsonDocument doc;
-      deserializeJson(doc, json);
+      deserializeJson(doc, file);
+      file.close();
 
       JsonArray wifiList = doc.as<JsonArray>();
       for (JsonVariant wifi : wifiList) {
         if (wifi["password"].isNull()) {
-          wifiMulti.addAP(wifi["ssid"].as<String>().c_str());
+          _wifiMulti->addAP(wifi["ssid"].as<String>().c_str());
         } else {
-          wifiMulti.addAP(wifi["ssid"].as<String>().c_str(), wifi["password"].as<String>().c_str());
+          _wifiMulti->addAP(wifi["ssid"].as<String>().c_str(), wifi["password"].as<String>().c_str());
         }
       }
 

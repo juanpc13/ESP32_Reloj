@@ -5,26 +5,19 @@ void setup() {
   Serial.begin(115200);
   Serial.println();
 
-  //Iniciando mi Sistema de archivos
-  uFileS.begin(FORMAT_SPIFFS);
-
-  //Configurando myWiFi
-  myWiFi.setWifiFile(wifiFile);
-  myWiFi.setFileSystem(uFileS);  
   myWiFi.begin();
-  
-  
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (wifiMulti.run() == WL_CONNECTED) {    
+  if (wifiMulti.run() == WL_CONNECTED) {
     Serial.println("WiFi connected");
     Serial.println("IP address: ");
     Serial.println(WiFi.localIP());
     Serial.print("Millis=");
     Serial.println(millis());
-  }else {    
+  } else {
     Serial.println("No Conected");
     Serial.print("Millis=");
     Serial.println(millis());
