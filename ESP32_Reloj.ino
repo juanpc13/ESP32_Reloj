@@ -7,20 +7,40 @@ void setup() {
 
   myWiFi.begin();
 
+  Serial.println("Wifi Manager use: \n(addWifi ssidName,passWord)\n(delWifi ssidName)\n(showWifiList)");
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (wifiMulti.run() == WL_CONNECTED) {
-    Serial.println("WiFi connected");
-    Serial.println("IP address: ");
-    Serial.println(WiFi.localIP());
-    Serial.print("Millis=");
-    Serial.println(millis());
-  } else {
-    Serial.println("No Conected");
-    Serial.print("Millis=");
-    Serial.println(millis());
+  String s = Serial.readString();
+
+  if (s.length() > 8) {
+
+    if (s.substring(0, 7) == "addWifi") {
+
+      myWiFi.addWifi(s.substring(8, s.indexOf(",")), s.substring(s.indexOf(",") + 1));
+
+    } else if (s.substring(0, 7) == "delWifi") {
+
+      myWiFi.deleteWifi(s.substring(8));
+
+    } else if (s.substring(0, 12) == "showWifiList") {
+
+      Serial.println(myWiFi.showWifiList());
+
+    }
+
   }
-  delay(1000);
+  /*
+    if (wifiMulti.run() == WL_CONNECTED) {
+    Serial.println("WiFi connected");Serial.println("IP address: ");Serial.println(WiFi.localIP());
+    Serial.print("Millis=");Serial.println(millis());
+    } else {
+    Serial.println("No Conected");
+    Serial.print("Millis=");Serial.println(millis());
+    }
+    delay(500);
+  */
+
 }
