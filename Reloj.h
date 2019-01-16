@@ -8,3 +8,6 @@ utilsSPIFFS uFileS;
 WiFiMulti wifiMulti;
 MyWiFi myWiFi(&uFileS, &wifiMulti);
 
+//Asignando tarea al primero core 0
+TaskHandle_t taskCore0;
+

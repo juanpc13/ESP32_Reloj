@@ -9,42 +9,20 @@ void setup() {
 
   Serial.println("Wifi Manager use: \n(addWifi ssidName,passWord)\n(delWifi ssidName)\n(showWifiList)");
 
+  xTaskCreatePinnedToCore(coreCeroLoop, "coreCeroLoop", 1000, NULL, 1, &taskCore0, 0);
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (Serial.available()) {
-    String s = Serial.readString();
+  wifiMulti.run();
+  //Serial.println("WiFi connected"); Serial.println("IP address: "); Serial.println(WiFi.localIP());
+}
 
-    if (s.length() > 8) {
-
-      if (s.substring(0, 7) == "addWifi") {
-
-        myWiFi.addWifi(s.substring(8, s.indexOf(",")), s.substring(s.indexOf(",") + 1));
-
-      } else if (s.substring(0, 7) == "delWifi") {
-
-        myWiFi.deleteWifi(s.substring(8));
-
-      } else if (s.substring(0, 12) == "showWifiList") {
-
-        Serial.println(myWiFi.showWifiList());
-
-      }
-
-    }
-
-  }
-
-  if (wifiMulti.run() == WL_CONNECTED) {
+void coreCeroLoop( void * parameter ) {
+  // put your main code here, to run repeatedly:
+  while (true) {
+    //wifiMulti.run();
     Serial.println("WiFi connected"); Serial.println("IP address: "); Serial.println(WiFi.localIP());
-    Serial.print("Millis="); Serial.println(millis());
-  } else {
-    Serial.println("No Conected");
-    Serial.print("Millis="); Serial.println(millis());
   }
-
-
-
-
 }
