@@ -58,8 +58,11 @@ class MyWiFi {
       JsonObject wifi = wifiList.createNestedObject();
 
       wifi["ssid"] = ssid;
-      if (password != "") {
+      if (password == "") {
+        _wifiMulti->addAP(ssid.c_str());
+      } else {
         wifi["password"] = password;
+        _wifiMulti->addAP(ssid.c_str(), password.c_str());
       }
 
       file.close();
